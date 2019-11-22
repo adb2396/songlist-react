@@ -1,9 +1,11 @@
 import React from 'react';
 
+import SongList from './SongList';
+
 const App = () => {
     return (
-        <div className="container">
-            App
+        <div className="ui grid container">
+            <SongList />
         </div>
     );
 };
