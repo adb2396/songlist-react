@@ -1,26 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { selectedSong } from '../actions/index';
 
-const renderList = (songs) => {
-    return songs.map(( song ) => {
-        return (
-            <div className="item">
-                <div className="content">
-                    <div className="header">{ song.title }</div>
-                    <div className="description">{ song.description }</div>
+class SongList extends React.Component {
+
+    renderList() {
+        return this.props.songs.map(( song, i ) => {
+            return (
+                <div className="item" key={i}>
+                    <div className="content">
+                        <div className="header">{ song.title }</div>
+                        <div className="description">{ song.description }</div>
+                    </div>
+                    <div className="right floated content">
+                        <button 
+                            onClick={ () => this.props.selectedSong(song) }
+                            className="ui button primary"
+                        >
+                            Select
+                        </button>
+                    </div>
                 </div>
-                <button className="ui button primary right floated">Select</button>
+            );
+        });
+    }
+
+    render() {
+        return (
+            <div className="ui divided list">
+                { this.renderList() }
             </div>
         );
-    });
-}
-
-const SongList = (props) => {
-    return (
-        <div className="ui relaxed divided list">
-            { renderList(props.songs) }
-        </div>
-    );
+    }
 };
 
 const mapStateToProps = state => {
@@ -28,5 +39,6 @@ const mapStateToProps = state => {
 }
 
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    { selectedSong }
 )(SongList);
