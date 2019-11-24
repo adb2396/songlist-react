@@ -1,9 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const SongDetails = () => {
+const renderSongDetails = (song) => {
+    return Object.keys(song).map((keyName, i) => {
+        return <div className="item" key={i}>
+            <span>{keyName} : { song[keyName] }</span>
+        </div>
+    })
+}
+
+const SongDetails = (props) => {
     return (
-        <div>Song Details</div>
+        <div className="ui list">
+            { props.song !== null ? renderSongDetails(props.song) : <div></div> }
+        </div>
     );
 };
 
-export default SongDetails;
+const mapStateToProps = state => {
+    return { song: state.selectedSong }
+}
+
+export default connect(
+    mapStateToProps,
+)(SongDetails);
